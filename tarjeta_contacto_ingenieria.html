@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjeta de Contacto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       TARJETA DE CONTACTO DIGITAL — INGENIERÍA
+       ============================================================
+       CÓMO PERSONALIZAR:
+       1. Busca la sección "=== DATOS DEL CONTACTO ===" en el HTML
+          y reemplaza los datos con los tuyos.
+       2. Para cambiar los COLORES, edita las variables en :root
+       3. Para cambiar el LOGO/AVATAR, reemplaza las iniciales en .avatar
+       4. Para agregar REDES SOCIALES, duplica un bloque .contact-item
+       ============================================================ */
+
+    /* ── Variables de color — cambia aquí para personalizar ── */
+    :root {
+      --azul-oscuro:    #0a3d6b;   /* Header izquierdo / degradado inicio */
+      --azul-medio:     #185FA5;   /* Color principal de la marca          */
+      --azul-claro:     #2275c7;   /* Header degradado fin                 */
+      --azul-fondo:     #E6F1FB;   /* Fondo de íconos                      */
+      --verde-estado:   #5ce0a8;   /* Punto indicador de disponibilidad    */
+      --texto-tarjeta:  #1a2535;   /* Color de texto oscuro                */
+      --texto-secundario: #6b7a90; /* Etiquetas y textos menores           */
+      --fondo-card:     #ffffff;   /* Fondo de la tarjeta                  */
+      --fondo-footer:   #f5f7fa;   /* Fondo del pie de la tarjeta          */
+      --borde-color:    #e0e8f0;   /* Color de bordes y separadores        */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #eef2f7;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+
+    /* ── Tarjeta principal ── */
+    .card {
+      width: 360px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--fondo-card);
+      border: 1px solid var(--borde-color);
+      box-shadow: 0 8px 32px rgba(24, 95, 165, 0.12);
+    }
+
+    /* ── Encabezado azul ── */
+    .card-header {
+      background: linear-gradient(135deg,
+        var(--azul-oscuro) 0%,
+        var(--azul-medio) 60%,
+        var(--azul-claro) 100%);
+      padding: 32px 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Círculos decorativos de fondo */
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: -10px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Badge de empresa / área */
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 16px;
+    }
+    .company-badge span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .dot-badge {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--verde-estado);
+    }
+
+    /* Avatar / Iniciales */
+    .avatar {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+      /* Para usar foto en vez de iniciales, cambia el contenido
+         del div .avatar por: <img src="foto.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%"> */
+    }
+
+    .name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .title {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── Cuerpo de la tarjeta ── */
+    .card-body {
+      padding: 22px 28px;
+    }
+
+    /* Fila de contacto */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--borde-color);
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 8px;
+      margin: 0 -8px;
+      transition: background 0.15s;
+    }
+    .contact-item:last-of-type { border-bottom: none; }
+    .contact-item:hover { background: #f4f8fd; }
+
+    /* Ícono circular */
+    .icon-circle {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--azul-fondo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-circle svg {
+      width: 16px; height: 16px;
+    }
+
+    .contact-label {
+      font-size: 10px;
+      color: var(--texto-secundario);
+      margin: 0 0 1px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+    .contact-value {
+      font-size: 14px;
+      color: var(--texto-tarjeta);
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--borde-color);
+      margin: 18px 0;
+    }
+
+    /* Botones de acción */
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .btn {
+      padding: 11px 0;
+      border-radius: 10px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.2px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: var(--azul-medio);
+      color: #fff;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-secondary {
+      background: #f0f4f9;
+      color: var(--texto-tarjeta);
+      border: 1px solid var(--borde-color);
+    }
+    .btn-secondary:hover { background: #e5ecf5; }
+
+    /* ── Pie de tarjeta ── */
+    .card-footer {
+      padding: 14px 28px;
+      background: var(--fondo-footer);
+      border-top: 1px solid var(--borde-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .company-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--texto-secundario);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .specialty-tag {
+      font-size: 10px;
+      color: var(--azul-medio);
+      font-weight: 700;
+      background: var(--azul-fondo);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- ═══════════════════════════════════════════════
+         === SECCIÓN 1: ENCABEZADO — edita el badge,
+             avatar, nombre y cargo aquí
+         ═══════════════════════════════════════════════ -->
+    <div class="card-header">
+
+      <!-- Badge de área o disponibilidad -->
+      <div class="company-badge">
+        <div class="dot-badge"></div>
+        <!-- EDITAR: área o departamento -->
+        <span>Servicios de Ingeniería</span>
+      </div>
+
+      <!-- Avatar con iniciales — reemplaza "JD" con las tuyas -->
+      <div class="avatar">JD</div>
+
+      <!-- EDITAR: nombre completo -->
+      <p class="name">Juan David Pérez</p>
+
+      <!-- EDITAR: cargo -->
+      <p class="title">Ingeniero Líder de Proyectos</p>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         === SECCIÓN 2: DATOS DE CONTACTO
+             Puedes duplicar bloques .contact-item
+             para agregar más canales (email, web, etc.)
+         ═══════════════════════════════════════════════ -->
+    <div class="card-body">
+
+      <!-- Teléfono celular -->
+      <!-- EDITAR: href="tel:+57XXXXXXXXXX" y el texto -->
+      <a class="contact-item" href="tel:+573001234567">
+        <div class="icon-circle">
+          <!-- Ícono teléfono -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.82 2.18 2 2 0 012.82.22h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.28v1.64z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="contact-label">Celular</p>
+          <!-- EDITAR: número de celular -->
+          <p class="contact-value">+57 300 123 4567</p>
+        </div>
+      </a>
+
+      <!-- Teléfono fijo / oficina -->
+      <!-- EDITAR: href="tel:+57XXXXXXXXXX" y el texto -->
+      <a class="contact-item" href="tel:+576041234567">
+        <div class="icon-circle">
+          <!-- Ícono teléfono de oficina -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+        </div>
+        <div>
+          <p class="contact-label">Fijo / Oficina</p>
+          <!-- EDITAR: teléfono fijo y extensión -->
+          <p class="contact-value">(604) 123 4567 Ext. 10</p>
+        </div>
+      </a>
+
+      <!-- ── EJEMPLO OPCIONAL: Email (descomenta para activarlo) ──
+      <a class="contact-item" href="mailto:tucorreo@empresa.com">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div>
+          <p class="contact-label">Correo</p>
+          <p class="contact-value">correo@empresa.com</p>
+        </div>
+      </a>
+      -->
+
+      <!-- ── EJEMPLO OPCIONAL: Sitio web (descomenta para activarlo) ──
+      <a class="contact-item" href="https://www.tuempresa.com" target="_blank">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="contact-label">Sitio Web</p>
+          <p class="contact-value">www.tuempresa.com</p>
+        </div>
+      </a>
+      -->
+
+      <div class="divider"></div>
+
+      <!-- Botones de acción -->
+      <!-- EDITAR: reemplaza el número en los href de los botones -->
+      <div class="actions">
+        <button class="btn btn-primary" onclick="window.location.href='tel:+573001234567'">
+          Llamar
+        </button>
+        <button class="btn btn-secondary" onclick="window.open('https://wa.me/573001234567', '_blank')">
+          WhatsApp
+        </button>
+      </div>
+
+    </div><!-- /card-body -->
+
+
+    <!-- ═══════════════════════════════════════════════
+         === SECCIÓN 3: PIE — nombre empresa y tag
+         ═══════════════════════════════════════════════ -->
+    <div class="card-footer">
+      <!-- EDITAR: nombre de la empresa -->
+      <span class="company-name">Tu Empresa S.A.S</span>
+      <!-- EDITAR: especialidad o área -->
+      <span class="specialty-tag">Ingeniería</span>
+    </div>
+
+  </div><!-- /card -->
+
+</body>
+</html>
